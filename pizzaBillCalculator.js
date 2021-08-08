@@ -1,21 +1,34 @@
 const getPrice = (menu, rawOrder) => {
-  const order = rawOrder.split(", ");
-  if (order.length > 0) {
-    const pizza = order[0];
-    const extras = order.slice(1);
-    const pizzaPrice = menu.pizzas?.hasOwnProperty(pizza)
-      ? menu.pizzas[pizza]
-      : 0;
-    const extrasPrice = extras?.reduce((totalPrice, extra) => {
-      const isTopping = menu.toppings?.hasOwnProperty(extra);
-      const isBread = menu.breads?.hasOwnProperty(extra);
-      if (isTopping) return totalPrice + menu.toppings[extra];
-      else if (isBread) return totalPrice + menu.breads[extra];
-      else return totalPrice;
-    }, 0);
-    return pizzaPrice + extrasPrice;
+  const order = buildOrder(rawOrder);
+  return (
+    getPizzaPrice(menu.pizzas, order.pizza) +
+    getExtrasPrice(menu.toppings, menu.breads, order.extras)
+  );
+};
+
+const buildOrder = (rawOrder) => {
+  const order = { pizza: "", extras: [] };
+  if (rawOrder && rawOrder.length > 0) {
+    order.pizza = rawOrder.split(", ")[0];
+    order.extras = rawOrder.split(", ").slice(1);
   }
-  return 0;
+  return order;
+};
+
+const getPizzaPrice = (availablePizzas, pizzaOrder) => {
+  return availablePizzas?.hasOwnProperty(pizzaOrder)
+    ? availablePizzas[pizzaOrder]
+    : 0;
+};
+
+const getExtrasPrice = (availableToppings, availableBreads, extrasOrder) => {
+  return extrasOrder?.reduce((totalPrice, extra) => {
+    const isTopping = availableToppings?.hasOwnProperty(extra);
+    const isBread = availableBreads?.hasOwnProperty(extra);
+    if (isTopping) return totalPrice + availableToppings[extra];
+    else if (isBread) return totalPrice + availableBreads[extra];
+    else return totalPrice;
+  }, 0);
 };
 
 module.exports = { getPrice };
