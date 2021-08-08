@@ -1,18 +1,32 @@
 const getPrice = (menu, rawOrder) => {
   const order = buildOrder(rawOrder);
+  validate(order);
   return (
     getPizzaPrice(menu.pizzas, order.pizza) +
-    getExtrasPrice(menu.toppings, menu.breads, order.extras)
+    getExtrasPrice(menu.toppings, menu.breads, order.extrasToAdd) -
+    getExtrasPrice(menu.toppings, menu.breads, order.extrasToRemove)
   );
 };
 
 const buildOrder = (rawOrder) => {
-  const order = { pizza: "", extras: [] };
+  const order = { pizza: "", extrasToAdd: [], extrasToRemove: [] };
   if (rawOrder && rawOrder.length > 0) {
     order.pizza = rawOrder.split(", ")[0];
-    order.extras = rawOrder.split(", ").slice(1);
+    const extras = rawOrder.split(", ").slice(1);
+    order.extrasToAdd = extras?.filter((topping) => topping[0] !== "-");
+    order.extrasToRemove = extras
+      ?.filter((extra) => extra[0] === "-")
+      .map((extra) => extra.substring(1));
   }
   return order;
+};
+
+const validate = (order) => {
+  const isRemovingMultipleTimes =
+    new Set(order.extrasToRemove).size !== order.extrasToRemove.length;
+  if (isRemovingMultipleTimes) {
+    throw new Error("Can not removed already removed topping.");
+  }
 };
 
 const getPizzaPrice = (availablePizzas, pizzaOrder) => {
