@@ -81,3 +81,9 @@ Price of added olives topping: 20
 Price of Thin Crust: 20
 Price of Onion removed: 10
 The price of this order would then become: (350+20+15+20+20)-10 = 415
+
+## How to run solution
+
+Install dependencies with `npm install`
+Run the solution with `npm start`
+Run the tests with `npm test`

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "jest"
   },
   "repository": {
@@ -18,5 +19,9 @@
   "homepage": "https://github.com/saurabhnarhe/GoPizzaJs#readme",
   "devDependencies": {
     "jest": "^27.0.6"
+  },
+  "dependencies": {
+    "ascii-art": "^2.8.5",
+    "ascii-art-table": "^1.0.1"
   }
 }

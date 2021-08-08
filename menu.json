@@ -1,0 +1,21 @@
+{
+    "pizzas": {
+      "Veggie Supreme": 250,
+      "Chicken Supreme": 300,
+      "Double Chicken feast": 350,
+      "Veg Farmhouse": 300,
+      "Margarita": 225
+    },
+    "toppings": {
+      "Cheese": 20,
+      "Olives": 15,
+      "Onion": 10,
+      "Chicken": 25,
+      "Cottage Cheese": 15
+    },
+    "breads": {
+      "Pan": 10,
+      "Thin Crust": 20,
+      "Cheese Crust": 25
+    }
+}
